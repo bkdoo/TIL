@@ -48,7 +48,7 @@
 
   - 객체를 초기화 하는 메소드 - init() 정의
 
-    ```java
+  ```java
     public void init() {
         setBackgroundResource(iconNormal); // 배경 이미지 설정
     
@@ -66,7 +66,7 @@
 
   * 버튼을 눌렀을 때의 기능 추가 - onTouchEvent() 메소드 재정의
 
-    ```java
+  ```java
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         super.onTouchEvent(event);
