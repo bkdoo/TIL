@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffffff"
+    tools:context="com.example.student.multimemoproject.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <com.example.student.multimemoproject.common.TitleBackgroundButton
+            android:layout_height="60dp"
+            android:layout_width="match_parent"
+            android:id="@+id/titleBackgroundBtn"
+            android:text="멀티메모" />
+
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/memoList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonLayout"
+        android:layout_below="@+id/titleLayout" />
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.example.student.multimemoproject.common.TitleBitmapButton
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:id="@+id/newMemoBtn"
+                android:text="새 메모" />
+
+            <com.example.student.multimemoproject.common.TitleBitmapButton
+                android:id="@+id/closeBtn"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:text="닫기" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
