@@ -16,8 +16,75 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MemoInsertActivity"/>
+        <activity
+            android:name=".MemoInsertActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+
+        <activity
+            android:name=".PhotoCaptureActivity"
+            android:screenOrientation="landscape"
+            >
+        </activity>
+
+        <activity
+            android:name=".PhotoSelectionActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+
+        <activity
+            android:name=".HandwritingMakingActivity"
+            android:screenOrientation="landscape"
+            >
+        </activity>
+        <activity
+            android:name=".PenPaletteDialog"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            android:screenOrientation="landscape"
+            >
+        </activity>
+        <activity
+            android:name=".ColorPaletteDialog"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            android:screenOrientation="landscape"
+            >
+        </activity>
+
+        <activity
+            android:name=".VideoRecordingActivity"
+            android:screenOrientation="landscape"
+            >
+        </activity>
+        <activity
+            android:name=".VideoPlayActivity"
+            android:screenOrientation="landscape"
+            >
+        </activity>
+        <activity
+            android:name=".VideoSelectionActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <activity
+            android:name=".VoiceRecordingActivity"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <activity
+            android:name=".VoicePlayActivity"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
 </manifest>

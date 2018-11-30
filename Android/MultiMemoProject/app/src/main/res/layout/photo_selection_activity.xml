@@ -2,7 +2,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	>
-  	<org.techtown.multimemo.CoverFlow
+  	<com.example.student.multimemoproject.CoverFlow
 		android:id="@+id/loading_gallery"
 	    android:layout_width="match_parent"
 	    android:layout_height="180dp"
@@ -44,7 +44,7 @@
 	    	android:layout_height="wrap_content"
 	    	android:layout_gravity="center_horizontal"
 	    	>
-			<org.techtown.multimemo.common.TitleBitmapButton
+			<com.example.student.multimemoproject.common.TitleBitmapButton
 				android:id="@+id/loading_okBtn"
 			    android:layout_width="100dp"
 			    android:layout_height="48dp"
@@ -53,7 +53,7 @@
 			    android:textStyle="bold"
 			    android:textColor="#ff420000"
 			    />
-			<org.techtown.multimemo.common.TitleBitmapButton
+			<com.example.student.multimemoproject.common.TitleBitmapButton
 				android:id="@+id/loading_cancelBtn"
 			    android:layout_width="100dp"
 			    android:layout_height="48dp"

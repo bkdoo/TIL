@@ -9,23 +9,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by student on 2018-11-26.
+ * 메모리스트 어뎁터 클래스
  */
 
 public class MemoListAdapter extends BaseAdapter{
     private Context mContext;
-    private List<MemoListItem> mItems = new ArrayList<>();
 
-    public MemoListAdapter(Context mContext) {
-        this.mContext = mContext;
+    private List<MemoListItem> mItems = new ArrayList<MemoListItem>();
+
+    public MemoListAdapter(Context context) {
+        mContext = context;
     }
 
-    public void clear(){
+    public void clear() {
         mItems.clear();
     }
 
-    public void setListitems(List<MemoListItem> mItems) {
-        this.mItems = mItems;
+    public void addItem(MemoListItem it) {
+        mItems.add(it);
+    }
+
+    public void setListItems(List<MemoListItem> lit) {
+        mItems = lit;
+    }
+
+    public int getCount() {
+        return mItems.size();
+    }
+
+    public Object getItem(int position) {
+        return mItems.get(position);
     }
 
     public boolean areAllItemsSelectable() {
@@ -40,35 +53,19 @@ public class MemoListAdapter extends BaseAdapter{
         }
     }
 
-
-
-    public void addItem(MemoListItem aItem) {
-        mItems.add(aItem);
+    public long getItemId(int position) {
+        return position;
     }
 
-    @Override
-    public int getCount() {
-        return mItems.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return mItems.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
         MemoListItemView itemView;
-        if (convertView == null){
+        if (convertView == null) {
             itemView = new MemoListItemView(mContext);
         } else {
             itemView = (MemoListItemView) convertView;
         }
 
+        // set current item data
         itemView.setContents(0, ((String) mItems.get(position).getData(0)));
         itemView.setContents(1, ((String) mItems.get(position).getData(1)));
         itemView.setContents(2, ((String) mItems.get(position).getData(3)));

@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:id="@+id/frame" 
         />
-	<org.techtown.multimemo.common.TitleBitmapButton
+	<com.example.student.multimemoproject.common.TitleBitmapButton
     	android:id="@+id/capture_takeBtn" 
     	android:layout_width="80dp"
         android:layout_height="150dp"

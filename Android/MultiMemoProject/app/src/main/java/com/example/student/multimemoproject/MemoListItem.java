@@ -19,12 +19,14 @@ public class MemoListItem {
     private boolean mSelectable = true;
 
 
+    //생성자 호출
     public MemoListItem(String itemId, String[] obj) {
         mId = itemId;
         mData = obj;
     }
 
 
+    // 메모리스트의 한 리스트에 대한 데이터 값을 저장하는 배열 생성 메소드
     public MemoListItem(String memoId, String memoDate, String memoText,
                         String id_handwriting, String uri_handwriting,
                         String id_photo, String uri_photo,

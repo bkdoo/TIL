@@ -181,12 +181,13 @@
                 // 데이터들을 MemoListItem array에 넣고 Adapter에 저장 
                 mMemoListAdapter.addItem(new MemoListItem(memoId, dateStr, memoStr, handwritingId, handwritingUriStr, phtoId, photoUriStr, videoId, videoUriStr, voiceId, voiceUriStr));
     
-                // cursor는 garbage collector가 정리해주지 않으므로 close() 실행
-                outCursor.close();
                 
-                //data가 수정되었음을 알림
-                mMemoListAdapter.notifyDataSetChanged();
             }
+            // cursor는 garbage collector가 정리해주지 않으므로 close() 실행
+            outCursor.close();
+                
+            //data가 수정되었음을 알림
+            mMemoListAdapter.notifyDataSetChanged();
         }
         return recordCount;
     }
