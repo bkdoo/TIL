@@ -51,7 +51,6 @@ public class MovieListActivity extends AppCompatActivity {
         lvMovie.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
-                Toast.makeText(getApplicationContext(), arrMovie[i]+" 선택함", Toast.LENGTH_SHORT).show();
             }
         });
     }
