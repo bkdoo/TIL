@@ -1,10 +1,37 @@
 ## 안드로이드 - Broadcast Receiver
 
+- 브로드캐스팅(Broadcasting)이란 메세지를 여러 객체에게 전달하는 것을 의미.
+
+- 예를 들어 SMS 메세지를 수신했을 때, 이 문자를 다른 앱에 알려줄 필요가 있다면 브로드캐스팅으로 전달한다.
+
+- 이는 단말 전체에도 적용될 수 있는데 이를 '글로벌 이벤트(Global Event)'라고 부른다.
+
 - Activity에선 1대1로 인텐트를 전달하지만, Broadcast Reciver는 1대다로 전달하며, 수신하는 리시버가 없더라도 에러가 발생하지 않는다.
 
-- Manifest에 receiver를 등록해야한다.
+- 액티비티가 화면을 출력하는 역할을 수행한다면, 브로드 캐스트는 대부분 간단한 업무로 사용되거나 아니먼 브로드캐스트 리시버에서 다른 액티비티나 서비스를 실행하는 역할로 활용된다.
 
-- BroadcastRecevier를 상속받아 작성한다. 이 클래스 내에 있는 onReceive()라는 메소드를 재정의한다.
+- Broadcast Recevier 또한 애플리케이션 구성 요소이므로 Manifest에 등록해야하지만 예외적으로 자바 코드에서 registerReceiver() 메소드를 사용해 등록할 수 있다.
+
+- 서비스처럼 Broadcast Recevier 역시 화면이 없다. 
+
+- BroadcastRecevier를 상속받고, onReceive()라는 메소드를 재정하여 사용한다. 이 메소드는 브로드캐스트 메세지가 도착하면 자동으로 호출된다.
+
+- 메세지는 인텐트 안에 넣어 전달되므로 인텐트 필터를 이용해 등록한다.
+
+  ```java
+  registerReceiver(screenOn, new IntentFilter(Intent.ACTION_SCREEN_ON));
+  ```
+
+  ```xml
+  <receiver
+      android:name=".MyReceiver2"
+      android:enabled="true"
+      android:exported="true">
+      <intent-filter>
+       <action android:name="android.intent.action.BOOT_COMPLETED"/>
+      </intent-filter>
+  </receiver>
+  ```
 
 - 시스템 브로드 캐스트 인텐트
 
@@ -49,4 +76,3 @@
     unregisterReceiver(screenOn);
     unregisterReceiver(screenOff);
     ```
-
