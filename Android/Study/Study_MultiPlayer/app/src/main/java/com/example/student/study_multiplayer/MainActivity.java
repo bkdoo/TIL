@@ -1,6 +1,9 @@
 package com.example.student.study_multiplayer;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Environment;
@@ -19,13 +22,12 @@ public class MainActivity extends AppCompatActivity {
     Button btn_playMp3, btn_stopMp3;
     Button btn_prevMp3, btn_nextMp3;
     TextView tv_mp3;
-    MediaPlayer mPlayer;
+
     boolean bReadPerm = false;
     boolean bWritePerm = false;
 
-    String[] mp3Name = {"/music1.mp3", "/music2.mp3", "/music3.mp3", "/music4.mp3"};
-    int index;
-    String musicPath;
+    BroadcastReceiver receiver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,57 +41,50 @@ public class MainActivity extends AppCompatActivity {
         btn_nextMp3 = (Button) findViewById(R.id.btn_nextMp3);
         tv_mp3 = (TextView) findViewById(R.id.tv_mp3);
 
-        index = 0;
 
         btn_playMp3.setOnClickListener(new MyButtonListener());
         btn_stopMp3.setOnClickListener(new MyButtonListener());
         btn_prevMp3.setOnClickListener(new MyButtonListener());
         btn_nextMp3.setOnClickListener(new MyButtonListener());
+        Intent intent_to_service = new Intent(getApplicationContext(), MyService.class);
+        startService(intent_to_service);
 
-        mPlayer = new MediaPlayer();
+    }
 
-        if (bReadPerm && bWritePerm) {
-            String state = Environment.getExternalStorageState();
-
-            if (state.equals(Environment.MEDIA_MOUNTED)) {
-                prepareMp3();
-            }
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intent_to_service = new Intent(getApplicationContext(), MyService.class);
+        stopService(intent_to_service);
     }
 
     class MyButtonListener implements View.OnClickListener {
+
+        Intent intent;
 
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.btn_playMp3:
-                    playMp3();
+                    intent = new Intent("com.example.student.study_multiplayer");
+                    intent.putExtra("mode", "play");
                     break;
                 case R.id.btn_stopMp3:
-                    stopMp3();
+                    intent = new Intent("com.example.student.study_multiplayer");
+                    intent.putExtra("mode", "stop");
                     break;
                 case R.id.btn_prevMp3:
-
-                    if (index<=0){
-                        index = mp3Name.length-1;
-                    } else {
-                        index--;
-                    }
-                    prepareMp3();
-                    playMp3();
-
+                    intent = new Intent("com.example.student.study_multiplayer");
+                    intent.putExtra("mode", "prev");
                     break;
                 case R.id.btn_nextMp3:
-
-                    if (index>=mp3Name.length-1){
-                        index = 0;
-                    } else {
-                        index++;
-                    }
-                    prepareMp3();
-                    playMp3();
+                    intent = new Intent("com.example.student.study_multiplayer");
+                    intent.putExtra("mode", "next");
                     break;
+
+
             }
+            sendBroadcast(intent);
         }
     }
 
@@ -111,39 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void prepareMp3(){
-        try {
-            mPlayer.reset();
-            musicPath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                    + mp3Name[index];
-            mPlayer.setDataSource(musicPath);
-            mPlayer.prepare();
-            Log.d("PlayMp3", "mp3 file ");
-        } catch (Exception e) {
-            Log.d("PlayMp3", "mp3 file error");
-        }
-    }
 
-    private void playMp3(){
-        if (mPlayer.isPlaying()) {
-            mPlayer.pause();
-            btn_playMp3.setText("play");
-        } else {
-            mPlayer.start();
-            btn_playMp3.setText("pause");
-        }
-        tv_mp3.setText(mp3Name[index].substring(1));
-    }
-
-    private void stopMp3(){
-        mPlayer.stop();
-        btn_playMp3.setText("play");
-        try {
-            mPlayer.prepare();
-        } catch (Exception e) {
-            Log.d("PlayMp3", "mp3 file error");
-        }
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
