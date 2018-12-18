@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_prevMp3:
 
                     if (index<=0){
-                        index = 3;
+                        index = mp3Name.length-1;
                     } else {
                         index--;
                     }
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.btn_nextMp3:
 
-                    if (index>=3){
+                    if (index>=mp3Name.length-1){
                         index = 0;
                     } else {
                         index++;
