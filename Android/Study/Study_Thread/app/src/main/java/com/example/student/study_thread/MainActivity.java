@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     EditText editText_min, editText_sec;
     Button button_30s, button_1m, button_10m;
     Button button_reset, button_start, button_stop;
-    ProgressBar progressBar_main;
 
     int min, sec;
     Thread myThread = null;
@@ -39,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         button_start = (Button) findViewById(R.id.button_start);
         button_stop = (Button) findViewById(R.id.button_stop);
 
-        progressBar_main = (ProgressBar) findViewById(R.id.progressBar_main);
 
 
         min = 0;
@@ -54,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setTime();
-                setTextView_time(min, sec);
+                setTextView_time();
                 if (myThread == null) {
                     myThread = new MyThread();
                     myThread.start();
@@ -125,19 +123,19 @@ public class MainActivity extends AppCompatActivity {
         textView_time.setText("00:00");
     }
 
-    private void setTextView_time(int min, int sec) {
+    private void setTextView_time() {
         String s_min;
         String s_sec;
 
         if (min < 10) {
-            s_min = "0" + editText_min.getText().toString();
+            s_min = "0" + min;
         } else {
-            s_min = editText_min.getText().toString();
+            s_min = String.valueOf(min);
         }
         if (sec < 10) {
-            s_sec = "0" + editText_sec.getText().toString();
+            s_sec = "0" + sec;
         } else {
-            s_sec = editText_sec.getText().toString();
+            s_sec = String.valueOf(sec);
         }
         textView_time.setText(s_min + ":" + s_sec);
     }
@@ -171,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 if (msg.arg1 > 0) {
                     min = msg.arg1 / 60;
                     sec = msg.arg1 % 60;
-                    setTextView_time(min, sec);
+                    setTextView_time();
                 } else {
                     clearTime();
                 }
