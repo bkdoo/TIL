@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Environment;
@@ -21,12 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
     Button btn_playMp3, btn_stopMp3;
     Button btn_prevMp3, btn_nextMp3;
-    TextView tv_mp3;
+    TextView tv_mp3, textView_position, textView_duration;
 
     boolean bReadPerm = false;
     boolean bWritePerm = false;
 
-    BroadcastReceiver receiver;
+
 
 
     @Override
@@ -40,15 +41,29 @@ public class MainActivity extends AppCompatActivity {
         btn_prevMp3 = (Button) findViewById(R.id.btn_prevMp3);
         btn_nextMp3 = (Button) findViewById(R.id.btn_nextMp3);
         tv_mp3 = (TextView) findViewById(R.id.tv_mp3);
+        textView_position= (TextView) findViewById(R.id.textView_position);
+        textView_duration= (TextView) findViewById(R.id.textView_duration);
+
 
 
         btn_playMp3.setOnClickListener(new MyButtonListener());
         btn_stopMp3.setOnClickListener(new MyButtonListener());
         btn_prevMp3.setOnClickListener(new MyButtonListener());
         btn_nextMp3.setOnClickListener(new MyButtonListener());
+
         Intent intent_to_service = new Intent(getApplicationContext(), MyService.class);
         startService(intent_to_service);
 
+        registerReceiver(receiver_from_service, new IntentFilter("com.example.student.study_multiplayer"));
+
+    }
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(receiver_from_service);
     }
 
     @Override
@@ -57,6 +72,21 @@ public class MainActivity extends AppCompatActivity {
         Intent intent_to_service = new Intent(getApplicationContext(), MyService.class);
         stopService(intent_to_service);
     }
+
+    BroadcastReceiver receiver_from_service = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String playMode = intent.getStringExtra("isPlaying");
+            if (playMode != null){
+                btn_playMp3.setText(playMode);
+
+            }
+        }
+    };
+
+
+
+
 
     class MyButtonListener implements View.OnClickListener {
 
@@ -120,4 +150,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

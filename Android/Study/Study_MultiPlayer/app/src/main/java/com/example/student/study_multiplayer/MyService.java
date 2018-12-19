@@ -17,27 +17,23 @@ public class MyService extends Service {
 
 
     String[] mp3Name = {"/music1.mp3", "/music2.mp3", "/music3.mp3", "/music4.mp3"};
-    int index;
+    int index = 0;
     String musicPath;
+    String play;
+    int duration, position;
 
 
     BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("log_myService", "onReceive");
-            index = 2;
 
 
-            String state = Environment.getExternalStorageState();
-
-
-            if (state.equals(Environment.MEDIA_MOUNTED)) {
-                prepareMp3();
-            }
+            Intent intent_to_activity = new Intent("com.example.student.study_multiplayer");
             String mode = intent.getStringExtra("mode");
             if (mode != null) {
                 if (mode.equals("play")) {
                     playMp3();
+
                 } else if (mode.equals("stop")) {
                     stopMp3();
                 } else if (mode.equals("prev")) {
@@ -57,7 +53,12 @@ public class MyService extends Service {
                     prepareMp3();
                     playMp3();
                 }
+
+
+                intent_to_activity.putExtra("isPlaying", play);
+                sendBroadcast(intent_to_activity);
             }
+
         }
     };
 
@@ -77,15 +78,15 @@ public class MyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("log_myService", "onStartCommand");
-
-
-
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            prepareMp3();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         Log.d("log_myService", "onDestroy");
         //서비스가 종료되면 리시버를 해체
         unregisterReceiver(receiver);
@@ -114,15 +115,22 @@ public class MyService extends Service {
     private void playMp3() {
         if (mPlayer.isPlaying()) {
             mPlayer.pause();
+            play = "PLAY";
+            duration = mPlayer.getDuration();
+            position = mPlayer.getCurrentPosition();
         } else {
             mPlayer.start();
+            play = "PAUSE";
+            Log.d("PlayMp3", "playing now");
         }
     }
 
     private void stopMp3() {
         mPlayer.stop();
+        play = "PLAY";
         try {
             mPlayer.prepare();
+            Log.d("PlayMp3", "stop playing");
         } catch (Exception e) {
             Log.d("PlayMp3", "mp3 file error");
         }
