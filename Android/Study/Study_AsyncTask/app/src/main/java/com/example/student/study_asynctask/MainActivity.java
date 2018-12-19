@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
     MyTask myTask = null;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +59,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 setTime();
                 setTextView_time();
-                if(myTask == null) {
-                    myTask = new MyTask();
-                    myTask.execute();
-                } else {
-                    Toast.makeText(MainActivity.this, "이미 동작하고 있습니다.",
-                            Toast.LENGTH_SHORT).show();
+                if (myTask != null) {
+                    myTask.cancel(true);
+                    myTask = null;
                 }
+                myTask = new MyTask();
+                myTask.execute();
 
             }
         });
@@ -75,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 clearTime();
-                if(myTask != null){
+                if (myTask != null) {
                     myTask.cancel(true);
                     myTask = null;
                 }
@@ -150,36 +148,41 @@ public class MainActivity extends AppCompatActivity {
         textView_time.setText(s_min + ":" + s_sec);
     }
 
-    class MyTask extends AsyncTask<Void, Void, Void>{
+    class MyTask extends AsyncTask<Void, Void, Void> {
+        int value;
 
         @Override
         protected Void doInBackground(Void... voids) {
             while (isCancelled() == false) {
-                time--;
-                if (time>=0){
+                if (time >= 0) {
                     publishProgress();
                 } else {
                     break;
                 }
-                try{
+                try {
                     Thread.sleep(1000);
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
+                value++;
+                time--;
+
             }
             return null;
         }
 
         @Override
         protected void onPreExecute() {
-            time = (min*60) + sec;
-            super.onPreExecute();
+            time = (min * 60) + sec;
+            value = 0;
+            progressBar_main.setMax(time);
+            progressBar_main.setProgress(0);
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             clearTime();
-            Toast.makeText(getApplicationContext(), "Timer가 종료되었습니다.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "타이머가 종료되었습니다.", Toast.LENGTH_SHORT).show();
             super.onPostExecute(aVoid);
         }
 
@@ -188,12 +191,14 @@ public class MainActivity extends AppCompatActivity {
             min = time / 60;
             sec = time % 60;
             setTextView_time();
+            progressBar_main.setProgress(value);
+        }
+
+        @Override
+        protected void onCancelled() {
+            progressBar_main.setProgress(0);
         }
     }
-
-
-
-
 
 
 }
