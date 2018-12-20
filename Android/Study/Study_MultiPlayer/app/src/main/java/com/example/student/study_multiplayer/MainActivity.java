@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     boolean bReadPerm = false;
     boolean bWritePerm = false;
+
+    int position;
 
 
 
@@ -81,11 +85,41 @@ public class MainActivity extends AppCompatActivity {
                 btn_playMp3.setText(playMode);
 
             }
+
+            int duration = intent.getIntExtra("duration", 0);
+            textView_duration.setText(convertTime(duration));
+            position = intent.getIntExtra("position", 0);
+            textView_position.setText(convertTime(position));
         }
     };
 
 
+    private String convertTime(int time) {
+        String result = "";
 
+        int sec = (time / 1000) % 60;
+        int min = (time / (1000 * 60)) % 60;
+        int hour = (time / (1000 * 60 * 60)) % 24;
+
+        if(hour < 10) {
+            result += "0"+hour+":";
+        } else {
+            result += hour+":";
+        }
+
+        if(min < 10) {
+            result += "0"+min+":";
+        } else {
+            result += hour+":";
+        }
+
+        if(sec < 10) {
+            result += "0"+sec;
+        } else {
+            result += sec;
+        }
+        return result;
+    }
 
 
     class MyButtonListener implements View.OnClickListener {
@@ -115,6 +149,42 @@ public class MainActivity extends AppCompatActivity {
 
             }
             sendBroadcast(intent);
+        }
+    }
+
+    class myTask extends AsyncTask<Void, Void, Void> {
+
+        Intent intent = new Intent("com.example.student.study_multiplayer");
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            while (isCancelled() == false) {
+                SystemClock.sleep(1000);
+                sendBroadcast(intent);
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            intent.putExtra("time", "running_time");
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onCancelled(Void aVoid) {
+            super.onCancelled(aVoid);
         }
     }
 

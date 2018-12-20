@@ -27,9 +27,9 @@ public class MyService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-
             Intent intent_to_activity = new Intent("com.example.student.study_multiplayer");
             String mode = intent.getStringExtra("mode");
+            String time = intent.getStringExtra("time");
             if (mode != null) {
                 if (mode.equals("play")) {
                     playMp3();
@@ -56,6 +56,13 @@ public class MyService extends Service {
 
 
                 intent_to_activity.putExtra("isPlaying", play);
+                sendBroadcast(intent_to_activity);
+            }
+            if (time!=null){
+                if (time.equals("running_time")){
+                    intent_to_activity.putExtra("duration", duration);
+                    intent_to_activity.putExtra("position", position);
+                }
                 sendBroadcast(intent_to_activity);
             }
 
@@ -105,6 +112,8 @@ public class MyService extends Service {
                     + mp3Name[index];
             mPlayer.setDataSource(musicPath);
             mPlayer.prepare();
+            duration = mPlayer.getDuration();
+            position = mPlayer.getCurrentPosition();
             Log.d("PlayMp3", "mp3 file ");
         } catch (Exception e) {
             Log.d("PlayMp3", "mp3 file error");
@@ -116,8 +125,7 @@ public class MyService extends Service {
         if (mPlayer.isPlaying()) {
             mPlayer.pause();
             play = "PLAY";
-            duration = mPlayer.getDuration();
-            position = mPlayer.getCurrentPosition();
+
         } else {
             mPlayer.start();
             play = "PAUSE";
