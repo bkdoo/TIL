@@ -1,4 +1,4 @@
-package com.example.student.mymovieapp;
+package com.example.student.mymovieapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.student.mymovieapp.InfoActivity;
+import com.example.student.mymovieapp.R;
 import com.example.student.mymovieapp.form.ListViewItem;
 
 import java.util.ArrayList;
@@ -18,14 +20,14 @@ import java.util.ArrayList;
  * Created by student on 2018-12-13.
  */
 
-public class ListViewAdapter extends BaseAdapter {
+public class ListViewAdapter2 extends BaseAdapter {
 
     ArrayList<ListViewItem> list;
     Context context;
     int item_layout;
     LayoutInflater layoutInflater;
 
-    public ListViewAdapter(Context context, int item_layout, ArrayList<ListViewItem> list) {
+    public ListViewAdapter2(Context context, int item_layout, ArrayList<ListViewItem> list) {
         this.context = context;
         this.item_layout = item_layout;
         this.list = list;
