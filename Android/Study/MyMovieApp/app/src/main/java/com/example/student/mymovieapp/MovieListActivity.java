@@ -169,7 +169,7 @@ public class MovieListActivity extends AppCompatActivity {
             // do something
             try {
                 JSONObject root = new JSONObject(s);
-                
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
