@@ -39,18 +39,18 @@
         app:layout_constraintGuide_percent="0.8" />
 
     <EditText
-        android:id="@+id/edtId"
+        android:id="@+id/edt_loginId"
         android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:hint="ID"
-        app:layout_constraintBottom_toTopOf="@+id/edtPwd1"
+        app:layout_constraintBottom_toTopOf="@+id/edt_loginPwd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
     <EditText
-        android:id="@+id/edtPwd1"
+        android:id="@+id/edt_loginPwd"
         android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:hint="PASSWORD"
@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtId" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_loginId" />
 
     <EditText
         android:id="@+id/edtPwd2"
@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtPwd1" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_loginPwd" />
 
     <Button
         android:id="@+id/btnJoin"

@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        edtId = (EditText) findViewById(R.id.edtId);
-        edtPwd1 = (EditText) findViewById(R.id.edtPwd1);
+        edtId = (EditText) findViewById(R.id.edt_loginId);
+        edtPwd1 = (EditText) findViewById(R.id.edt_loginPwd);
         edtPwd2 = (EditText) findViewById(R.id.edtPwd2);
         tvResult = (TextView) findViewById(R.id.tvResult);
         btnJoin = (Button) findViewById(R.id.btnJoin);
