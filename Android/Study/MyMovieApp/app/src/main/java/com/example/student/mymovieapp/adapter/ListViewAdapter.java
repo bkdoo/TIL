@@ -22,9 +22,9 @@ import java.util.ArrayList;
 
 public class ListViewAdapter extends BaseAdapter {
 
-    ArrayList<ListViewItem> list;
     Context context;
     int item_layout;
+    ArrayList<ListViewItem> list;
     LayoutInflater layoutInflater;
 
     public ListViewAdapter(Context context, int item_layout, ArrayList<ListViewItem> list) {
