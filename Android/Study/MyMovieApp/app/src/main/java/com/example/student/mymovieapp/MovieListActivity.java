@@ -5,10 +5,14 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.student.mymovieapp.adapter.ListViewAdapter;
 import com.example.student.mymovieapp.adapter.ListViewAdapter2;
@@ -32,6 +36,7 @@ import java.util.Iterator;
 public class MovieListActivity extends AppCompatActivity {
 
     ListView lvMovie;
+    Toolbar tb_movie;
 
     //자료를 배열로 만들어서 ListView에 전달
     ListViewAdapter listViewAdapter;
@@ -48,7 +53,8 @@ public class MovieListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_list);
 
         lvMovie = (ListView) findViewById(R.id.lvMovie);
-
+        tb_movie= (Toolbar) findViewById(R.id.tb_movie);
+        setSupportActionBar(tb_movie);
 
         arrayList = new ArrayList<>();
         arrayList.add(new ListViewItem("블랙팬서", "2018. 03", R.drawable.black));
@@ -83,6 +89,21 @@ public class MovieListActivity extends AppCompatActivity {
 //        lvMovie.setAdapter(listViewAdapter);
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_movie, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.btn_menu :
+                Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 
     class MyHttpTask extends AsyncTask<Void, Void, String> {
@@ -136,13 +157,14 @@ public class MovieListActivity extends AppCompatActivity {
                     //receive from server
                     bufferedReader = new BufferedReader(new InputStreamReader(http.getInputStream(), "UTF-8"));
                     StringBuffer sb = new StringBuffer();
-
                     String line;
 
 
                     while ((line = bufferedReader.readLine()) != null) {
                         sb.append(line);
                     }
+
+                    result = sb.toString();
 
 
                 }
@@ -169,12 +191,13 @@ public class MovieListActivity extends AppCompatActivity {
             // do something
             try {
                 JSONObject root = new JSONObject(s);
+                arrayList.add(new ListViewItem(root.getString("title"), root.getString("openDate"), 0));
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            arrayList.add(new ListViewItem(map.get("title"), map.get("date"), 0));
 
             listViewAdapter.notifyDataSetChanged();
             this.cancel(true);
