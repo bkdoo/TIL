@@ -1,6 +1,7 @@
 package com.example.student.study_camera;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
@@ -59,12 +60,18 @@ public class MainActivity extends AppCompatActivity implements TextureView.Surfa
                                 fos.write(data);
                                 fos.flush();
                                 fos.close();
+                                Intent intent  = new Intent(getApplicationContext(), ShowPictureActivity.class);
+                                String filepath = file.getAbsolutePath();
+                                intent.putExtra("filepath", filepath);
+                                startActivity(intent);
                                 camera.startPreview();
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
                     });
+
+
                 }
             }
         });
