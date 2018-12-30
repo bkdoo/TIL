@@ -3,15 +3,22 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dealer {
+public class Dealer implements Player{
+
 
 	private List<Card> cards;
+	private boolean turn;
 	private static final int CAN_RECEIVE_POINT = 16;
 	
 	public Dealer() {
 		cards = new ArrayList<>();
 	}
 
+	private void setTurn(boolean turn) {
+		this.turn = turn;
+	}
+	
+	@Override
 	public void receiveCard(Card card) {
 		if(canReceiveCard()) {
 			this.cards.add(card);
@@ -21,7 +28,8 @@ public class Dealer {
 		}
 	}
 	
-	private void showCards() {
+	@Override
+	public void showCards() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("현재 보유 카드 목록 \n");
 		
@@ -32,6 +40,11 @@ public class Dealer {
 		System.out.println(sb.toString());
 	}
 
+	@Override
+	public List<Card> openCards() {
+		return this.cards;
+	}
+	
 	private boolean canReceiveCard() {
 		return getPointSum() <= CAN_RECEIVE_POINT;
 	}
@@ -45,8 +58,20 @@ public class Dealer {
 		return sum;
 	}
 
-
-	public List<Card> openCards() {
-		return this.cards;
+	@Override
+	public void turnOn() {
+		this.setTurn(true);
 	}
+
+	@Override
+	public void turnOff() {
+		this.setTurn(false);
+	}
+
+	@Override
+	public boolean isTurn() {
+		return this.turn;
+	}
+
+
 }

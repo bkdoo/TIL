@@ -3,20 +3,27 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Gamer {
+public class Gamer implements Player{
 	private List<Card> cards;
+	private boolean turn;
 
 	
+	private void setTurn(boolean turn) {
+		this.turn = turn;
+	}
+
 	public Gamer() {
 		cards = new ArrayList<>();
 	}
-
+	
+	@Override
 	public void receiveCard(Card card) {
 		this.cards.add(card);
-		this.showCard();
+		this.showCards();
 	}
 	
-	public void showCard() {
+	@Override
+	public void showCards() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("현재 보유 카드 목록 \n");
 		
@@ -28,9 +35,26 @@ public class Gamer {
 		
 	}
 
+	@Override
 	public List<Card> openCards() {
 		return this.cards;
 	}
-	
+
+	@Override
+	public void turnOn() {
+		this.setTurn(true);
+		
+	}
+
+	@Override
+	public void turnOff() {
+		this.setTurn(false);
+	}
+
+	@Override
+	public boolean isTurn() {
+		return this.turn;
+	}
+
 	
 }
