@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class Game {
 
 	private static final int INIT_RECEIVE_CARD_COUNT = 2;
-	private String STOP_RECEIVE_CARD;
+	private String STOP_RECEIVE_CARD = "0";
 
 	public void play() {
 		System.out.println("========= Play Blackjack =========");
@@ -17,8 +17,8 @@ public class Game {
 
 		List<Player> players = Arrays.asList(new Gamer("사용자1"), new Dealer());
 		List<Player> initAfterPlayers = initPhase(cardDeck, players);
-		List<Player> playingAfterPlayers = playingPhase(sc, cardDeck, players);
-		
+		List<Player> playingAfterPlayers = playingPhase(sc, cardDeck, initAfterPlayers);
+
 		Player winner = rule.getWinner(playingAfterPlayers);
 		System.out.println("승자는 " + winner.getName());
 	}
@@ -37,6 +37,7 @@ public class Game {
 	private List<Player> recevieCardAllPlayers(Scanner sc, CardDeck cardDeck, List<Player> players) {
 
 		for (Player player : players) {
+			System.out.println(player.getName() + "님 차례입니다.");
 			if (isReceiveCard(sc)) {
 				Card card = cardDeck.draw();
 				player.receiveCard(card);
@@ -47,15 +48,15 @@ public class Game {
 		}
 		return players;
 	}
-	
-	private boolean isAllPlayerTurnOff(List<Player> players) {
-		for(Player player : players) {
-            if(player.isTurn()) {
-                return false;
-            }
-        }
 
-        return true;
+	private boolean isAllPlayerTurnOff(List<Player> players) {
+		for (Player player : players) {
+			if (player.isTurn()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	private boolean isReceiveCard(Scanner sc) {
@@ -67,6 +68,7 @@ public class Game {
 		System.out.println("처음 2장의 카드를 각자 뽑겠습니다.");
 		for (int i = 0; i < INIT_RECEIVE_CARD_COUNT; i++) {
 			for (Player player : players) {
+				System.out.println(player.getName()+"님 차례입니다.");
 				Card card = cardDeck.draw();
 				player.receiveCard(card);
 			}
